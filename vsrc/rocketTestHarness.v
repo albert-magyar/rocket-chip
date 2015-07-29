@@ -42,7 +42,7 @@ extern "A" void memory_tick
 module rocketTestHarness;
 
   reg [31:0] seed;
-  initial seed = $get_initial_random_seed();
+  initial seed = 0;//$get_initial_random_seed();
 
   //-----------------------------------------------
   // Instantiate the processor
@@ -115,42 +115,42 @@ module rocketTestHarness;
     .clk(clk),
     .reset(reset),
 
-    .io_host_in_valid(htif_in_valid_delay),
-    .io_host_in_ready(htif_in_ready_delay),
-    .io_host_in_bits(htif_in_bits_delay),
-    .io_host_out_valid(htif_out_valid_delay),
-    .io_host_out_ready(htif_out_ready_delay),
-    .io_host_out_bits(htif_out_bits_delay),
+    .host$in$valid(htif_in_valid_delay),
+    .host$in$ready(htif_in_ready_delay),
+    .host$in$bits(htif_in_bits_delay),
+    .host$out$valid(htif_out_valid_delay),
+    .host$out$ready(htif_out_ready_delay),
+    .host$out$bits(htif_out_bits_delay),
 
 `ifndef FPGA
-    .io_host_clk(htif_clk),
-    .io_host_clk_edge(),
-    .io_host_debug_stats_pcr(htif_out_stats_delay),
+    .host$clk(htif_clk),
+    .host$clk_edge(),
+    .host$debug_stats_pcr(htif_out_stats_delay),
 
 `ifdef MEM_BACKUP_EN
-    .io_mem_backup_ctrl_en(1'b1),
+    .mem_backup_ctrl$en(1'b1),
 `else
-    .io_mem_backup_ctrl_en(1'b0),
+    .mem_backup_ctrl$en(1'b0),
 `endif
-    .io_mem_backup_ctrl_in_valid(mem_bk_in_valid_delay),
-    .io_mem_backup_ctrl_out_ready(mem_bk_out_ready_delay),
-    .io_mem_backup_ctrl_out_valid(mem_bk_out_valid_delay),
+    .mem_backup_ctrl$in_valid(mem_bk_in_valid_delay),
+    .mem_backup_ctrl$out_ready(mem_bk_out_ready_delay),
+    .mem_backup_ctrl$out_valid(mem_bk_out_valid_delay),
 `endif
 
-    .io_mem_req_cmd_valid(mem_req_valid_delay),
-    .io_mem_req_cmd_ready(mem_req_ready_delay),
-    .io_mem_req_cmd_bits_rw(mem_req_bits_rw_delay),
-    .io_mem_req_cmd_bits_addr(mem_req_bits_addr_delay),
-    .io_mem_req_cmd_bits_tag(mem_req_bits_tag_delay),
+    .mem$req_cmd$valid(mem_req_valid_delay),
+    .mem$req_cmd$ready(mem_req_ready_delay),
+    .mem$req_cmd$bits$rw(mem_req_bits_rw_delay),
+    .mem$req_cmd$bits$addr(mem_req_bits_addr_delay),
+    .mem$req_cmd$bits$tag(mem_req_bits_tag_delay),
 
-    .io_mem_req_data_valid(mem_req_data_valid_delay),
-    .io_mem_req_data_ready(mem_req_data_ready_delay),
-    .io_mem_req_data_bits_data(mem_req_data_bits_delay),
+    .mem$req_data$valid(mem_req_data_valid_delay),
+    .mem$req_data$ready(mem_req_data_ready_delay),
+    .mem$req_data$bits$data(mem_req_data_bits_delay),
 
-    .io_mem_resp_valid(mem_resp_valid_delay),
-    .io_mem_resp_ready(mem_resp_ready_delay),
-    .io_mem_resp_bits_tag(mem_resp_bits_tag_delay),
-    .io_mem_resp_bits_data(mem_resp_bits_data_delay)
+    .mem$resp$valid(mem_resp_valid_delay),
+    .mem$resp$ready(mem_resp_ready_delay),
+    .mem$resp$bits$tag(mem_resp_bits_tag_delay),
+    .mem$resp$bits$data(mem_resp_bits_data_delay)
   );
   
 `ifdef FPGA
@@ -207,27 +207,27 @@ module rocketTestHarness;
     .clk(htif_clk),
     .reset(reset),
 
-    .io_narrow_req_valid(mem_bk_out_valid),
-    .io_narrow_req_ready(mem_bk_out_ready),
-    .io_narrow_req_bits(htif_out_bits),
+    .narrow_req_valid(mem_bk_out_valid),
+    .narrow_req_ready(mem_bk_out_ready),
+    .narrow_req_bits(htif_out_bits),
 
-    .io_narrow_resp_valid(mem_bk_in_valid),
-    .io_narrow_resp_bits(mem_in_bits),
+    .narrow_resp_valid(mem_bk_in_valid),
+    .narrow_resp_bits(mem_in_bits),
 
-    .io_wide_req_cmd_valid(mem_bk_req_valid),
-    .io_wide_req_cmd_ready(mem_bk_req_ready),
-    .io_wide_req_cmd_bits_rw(mem_bk_req_rw),
-    .io_wide_req_cmd_bits_addr(mem_bk_req_addr),
-    .io_wide_req_cmd_bits_tag(mem_bk_req_tag),
+    .wide_req_cmd_valid(mem_bk_req_valid),
+    .wide_req_cmd_ready(mem_bk_req_ready),
+    .wide_req_cmd_bits_rw(mem_bk_req_rw),
+    .wide_req_cmd_bits_addr(mem_bk_req_addr),
+    .wide_req_cmd_bits_tag(mem_bk_req_tag),
 
-    .io_wide_req_data_valid(mem_bk_req_data_valid),
-    .io_wide_req_data_ready(mem_bk_req_data_ready),
-    .io_wide_req_data_bits_data(mem_bk_req_data_bits),
+    .wide_req_data_valid(mem_bk_req_data_valid),
+    .wide_req_data_ready(mem_bk_req_data_ready),
+    .wide_req_data_bits_data(mem_bk_req_data_bits),
 
-    .io_wide_resp_valid(mem_bk_resp_valid),
-    .io_wide_resp_ready(),
-    .io_wide_resp_bits_data(mem_bk_resp_data),
-    .io_wide_resp_bits_tag(mem_bk_resp_tag)
+    .wide_resp_valid(mem_bk_resp_valid),
+    .wide_resp_ready(),
+    .wide_resp_bits_data(mem_bk_resp_data),
+    .wide_resp_bits_tag(mem_bk_resp_tag)
   );
 
   BackupMemory mem
